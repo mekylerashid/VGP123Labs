@@ -1,17 +1,18 @@
 using UnityEngine;
-
+[RequireComponent (typeof(Rigidbody2D), typeof(Collider2D), typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     //control variables
     public float groundCheckRadius = 0.02f;
     public float speed = 10f;
     public bool isGrounded = false;
-    private Vector2 groundCheckPos => new Vector2(col.bounds.center.x, col.bounds.min.y);
+    //private Vector2 groundCheckPos => new Vector2(col.bounds.center.x, col.bounds.min.y);
     public bool isFire = false;
     public bool airFire = false;
 
     //layer mask to identify what is ground
-    private LayerMask groundLayer;
+    //private LayerMask groundLayer;
 
     //component refrences
     //public Transform groundCheck;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     Collider2D col;
     SpriteRenderer sr;
     Animator anim;
+    GroundCheck groundCheck;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,7 +30,9 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
 
-        groundLayer = LayerMask.GetMask("Ground");
+        //groundLayer = LayerMask.GetMask("Ground");
+
+        groundCheck = new GroundCheck(col, LayerMask.GetMask("Ground"), groundCheckRadius);
 
         //initialize ground check position using separate game objec as a child fo the player
         //GameObject newObj = new GameObject("GroundCheck");
@@ -40,7 +44,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheckPos, groundCheckRadius, groundLayer);
+        isGrounded = groundCheck.CheckIsGrounded();
+
 
         float hValue = Input.GetAxis("Horizontal");
         float vValue = Input.GetAxis("Vertical");
@@ -53,20 +58,25 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.up * 10f, ForceMode2D.Impulse);
         }
 
+        if (Input.GetButtonDown("Fire1"))
+        {
+            anim.SetTrigger("Fire");
+        }
+
         anim.SetFloat("hvalue", Mathf.Abs(hValue));
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isFire", isFire);
         anim.SetBool("airFire", airFire);
 
-        if (Input.GetButtonDown("Fire1"))
+        /*if (Input.GetButtonDown("Fire1"))
         {
             isFire = true;
         }
 
-        if (Input.GetButtonUp("Fire1"))
+        //if (Input.GetButtonUp("Fire1"))
         {
             isFire = false;
-        }
+        }*/
        
         if (Input.GetButtonDown("Vertical") && !isGrounded)
         {
@@ -78,6 +88,8 @@ public class PlayerController : MonoBehaviour
             airFire = false; 
         }
     }
+
+    private void OnValidate() => groundCheck?.UpdateGroundCheckRadius(groundCheckRadius);
 
     private void SpriteFlip(float hValue)
     {
@@ -93,4 +105,6 @@ public class PlayerController : MonoBehaviour
          }
         */
     }
+    
 }
+
