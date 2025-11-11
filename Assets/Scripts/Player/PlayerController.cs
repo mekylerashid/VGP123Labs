@@ -1,19 +1,54 @@
+using System.Collections;
 using UnityEngine;
 [RequireComponent (typeof(Rigidbody2D), typeof(Collider2D), typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    #region Control Vars
     //control variables
     public float groundCheckRadius = 0.02f;
     public float speed = 10f;
-    public bool isGrounded = false;
+    public float jumpForce = 10f;
+    public bool isGrounded = false;  
+    public int maxLives = 10;
+    private int _lives = 5;
+    #endregion
+    #region Set/Get Lives
+    public int lives
+    {
+        get => _lives;
+        set
+            {
+            if (value < 0)
+            GameOver();
+            if (value > maxLives)
+            {
+                _lives = maxLives;
+              
+            }
+            else
+            {
+                _lives = value;
+            }
+
+            Debug.Log($"Life value has changed to {_lives}");
+        }
+    }
+    #endregion
+    private void GameOver()
+    {
+        Debug.Log("Game Over!");
+    }
+  
     //private Vector2 groundCheckPos => new Vector2(col.bounds.center.x, col.bounds.min.y);
     public bool isFire = false;
     public bool airFire = false;
+    public float initialPowerupTimer = 5f;
 
     //layer mask to identify what is ground
     //private LayerMask groundLayer;
 
+    #region Component Ref
     //component refrences
     //public Transform groundCheck;
     Rigidbody2D rb;
@@ -21,6 +56,11 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sr;
     Animator anim;
     GroundCheck groundCheck;
+    #endregion
+
+    //State Variables
+    Coroutine jumpForceCoroutine;
+    float jumpPowerupTimer = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -55,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            rb.AddForce(Vector2.up * 10f, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
         if (Input.GetButtonDown("Fire1"))
@@ -68,6 +108,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isFire", isFire);
         anim.SetBool("airFire", airFire);
 
+        #region Lab Attack
         /*if (Input.GetButtonDown("Fire1"))
         {
             isFire = true;
@@ -77,7 +118,8 @@ public class PlayerController : MonoBehaviour
         {
             isFire = false;
         }*/
-       
+        #endregion
+
         if (Input.GetButtonDown("Vertical") && !isGrounded)
         {
             airFire = true;
@@ -105,6 +147,46 @@ public class PlayerController : MonoBehaviour
          }
         */
     }
-    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 3) return;
+
+
+        Debug.Log("Collided with: " + collision.gameObject.name);
+    }
+
+    //These functions are called when a trigger collider is enterest, stayed in, or exited - they don't really have any limits on what they can interact with
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+       
+        Destroy(collision.gameObject);
+    }
+
+    public void ApplyJumpForcePowerup()
+    {
+        if (jumpForceCoroutine  != null)
+        {
+            StopCoroutine(jumpForceCoroutine);
+            jumpForceCoroutine = null;
+            jumpForce = 7;
+        }
+        jumpForceCoroutine = StartCoroutine(JumpForceChange());
+    }
+    IEnumerator JumpForceChange()
+    {
+        jumpPowerupTimer = initialPowerupTimer + jumpPowerupTimer;
+        jumpForce = 10f;
+
+        while (jumpPowerupTimer>0)
+        {
+            jumpPowerupTimer -= Time.deltaTime;
+            Debug.Log("Jump Powerup Time: " + jumpPowerupTimer);
+            yield return null;
+        }
+
+        jumpForce = 7;
+        jumpForceCoroutine = null;
+        jumpPowerupTimer = 0;
+    }
 }
 
