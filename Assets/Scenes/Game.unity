@@ -304,10 +304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab4dbf9af119174dafed49cdd4337d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpawn
-  spawnPoint: {fileID: 94274375}
   coinPrefab: {fileID: 3381183269974293617, guid: 9eef8d734409ce941b657aa348bf1d28, type: 3}
   mushroomPrefab: {fileID: 2062885044354447051, guid: 5b595c89e536b9f468c129ade3f03912, type: 3}
   yoshiCoinPrefab: {fileID: 8064281743657301446, guid: e5648f6977bff3e4c82f0261d3c02380, type: 3}
+  spawnPoint: {fileID: 94274375}
 --- !u!4 &94274375
 Transform:
   m_ObjectHideFlags: 0
@@ -698,10 +698,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab4dbf9af119174dafed49cdd4337d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpawn
-  spawnPoint: {fileID: 474822807}
   coinPrefab: {fileID: 3381183269974293617, guid: 9eef8d734409ce941b657aa348bf1d28, type: 3}
   mushroomPrefab: {fileID: 2062885044354447051, guid: 5b595c89e536b9f468c129ade3f03912, type: 3}
   yoshiCoinPrefab: {fileID: 8064281743657301446, guid: e5648f6977bff3e4c82f0261d3c02380, type: 3}
+  spawnPoint: {fileID: 474822807}
 --- !u!1 &488585079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,10 +1139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab4dbf9af119174dafed49cdd4337d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpawn
-  spawnPoint: {fileID: 687179476}
   coinPrefab: {fileID: 3381183269974293617, guid: 9eef8d734409ce941b657aa348bf1d28, type: 3}
   mushroomPrefab: {fileID: 2062885044354447051, guid: 5b595c89e536b9f468c129ade3f03912, type: 3}
   yoshiCoinPrefab: {fileID: 8064281743657301446, guid: e5648f6977bff3e4c82f0261d3c02380, type: 3}
+  spawnPoint: {fileID: 687179476}
 --- !u!1 &695899718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,6 +1464,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 907945355}
+  - component: {fileID: 907945356}
   m_Layer: 0
   m_Name: Spawners
   m_TagString: Untagged
@@ -1491,6 +1492,21 @@ Transform:
   - {fileID: 1779139190}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &907945356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907945354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 812acb591741c794186d4e4f25652a10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnSelect
+  coinPrefab: {fileID: 3381183269974293617, guid: 9eef8d734409ce941b657aa348bf1d28, type: 3}
+  mushroomPrefab: {fileID: 2062885044354447051, guid: 5b595c89e536b9f468c129ade3f03912, type: 3}
+  yoshiCoinPrefab: {fileID: 8064281743657301446, guid: e5648f6977bff3e4c82f0261d3c02380, type: 3}
 --- !u!1 &944490698
 GameObject:
   m_ObjectHideFlags: 0
@@ -3077,10 +3093,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab4dbf9af119174dafed49cdd4337d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpawn
-  spawnPoint: {fileID: 1779139190}
   coinPrefab: {fileID: 3381183269974293617, guid: 9eef8d734409ce941b657aa348bf1d28, type: 3}
   mushroomPrefab: {fileID: 2062885044354447051, guid: 5b595c89e536b9f468c129ade3f03912, type: 3}
   yoshiCoinPrefab: {fileID: 8064281743657301446, guid: e5648f6977bff3e4c82f0261d3c02380, type: 3}
+  spawnPoint: {fileID: 1779139190}
 --- !u!1 &1784157248
 GameObject:
   m_ObjectHideFlags: 0
@@ -3203,10 +3219,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab4dbf9af119174dafed49cdd4337d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpawn
-  spawnPoint: {fileID: 1862327501}
   coinPrefab: {fileID: 3381183269974293617, guid: 9eef8d734409ce941b657aa348bf1d28, type: 3}
   mushroomPrefab: {fileID: 2062885044354447051, guid: 5b595c89e536b9f468c129ade3f03912, type: 3}
   yoshiCoinPrefab: {fileID: 8064281743657301446, guid: e5648f6977bff3e4c82f0261d3c02380, type: 3}
+  spawnPoint: {fileID: 1862327501}
 --- !u!1 &1882604196
 GameObject:
   m_ObjectHideFlags: 0
