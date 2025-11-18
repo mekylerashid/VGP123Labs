@@ -151,15 +151,26 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.layer == 3) return;
 
-
         Debug.Log("Collided with: " + collision.gameObject.name);
     }
 
-    //These functions are called when a trigger collider is enterest, stayed in, or exited - they don't really have any limits on what they can interact with
+    //These functions are called when a trigger collider is entered, stayed in, or exited - they don't really have any limits on what they can interact with
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       
-        Destroy(collision.gameObject);
+        if(collision.CompareTag("Squish") && rb.linearVelocityY < 0)
+        {
+            collision.GetComponentInParent<BaseEnemy>().TakeDamage(0, DamageType.JumpedOn);
+            rb.linearVelocity = Vector2.zero;
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
+        if (collision.gameObject.CompareTag("Range"))
+        {
+            Debug.Log("Within Range");
+            collision.GetComponent<TurretEnemy>().anim.SetTrigger("Fire");
+            collision.GetComponent<TurretEnemy>().sr.flipX = !sr.flipX;
+        }
+        //Destroy(collision.gameObject);
     }
 
     public void ApplyJumpForcePowerup()

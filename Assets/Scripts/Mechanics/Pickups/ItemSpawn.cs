@@ -1,15 +1,6 @@
 using UnityEngine;
 
-public class ItemSpawn : SpawnSelect
+public class ItemSpawn : MonoBehaviour
 {
-
-    [SerializeField] protected Transform spawnPoint;
-    //[SerializeField] private Pickup lifePrefab;
- 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-        Instantiate(chosenItem, spawnPoint.position, Quaternion.identity);
-    }
+    public void SpawnItem(GameObject itemPrefab) => Instantiate(itemPrefab, transform.position, Quaternion.identity);
 }
