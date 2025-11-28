@@ -5,23 +5,29 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float minXPos = -0.09f;
     [SerializeField] private float maxXPos = 237.77f;
 
-    [SerializeField] private Transform target; 
+    [SerializeField] private Transform target;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-       if (!target)
-        {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if(!player)
-            {
-                Debug.LogError("CameraFollow: No GameObject with tag 'Player' found in the scene.");
-                return;
-            }
-            target = player.transform;
-        }
+        GameManager.Instance.OnPlayerSpawned += UpdatePlayerRef;
+        //MAKE YOUR CODE DEFENSIVE AGAINST BAD INPUT!!
+        //if (!target)
+        //{
+        //    GameObject player = GameObject.FindGameObjectWithTag("Player");
+        //    if (!player)
+        //    {
+        //        Debug.LogError("CameraFollow: No GameObject with tag 'Player' found in the scene.");
+        //        return;
+        //    }
+        //    target = player.transform;
+        //}
     }
 
+    private void UpdatePlayerRef(PlayerController playerInstance)
+    {
+        target = playerInstance.transform;
+    }
     // Update is called once per frame
     void Update()
     {

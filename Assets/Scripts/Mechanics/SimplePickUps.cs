@@ -20,7 +20,7 @@ public class SimplePickUps : MonoBehaviour
             {
                 case PickupType.Life:
                     //Increase player's life count
-                    pc.lives++;
+                   GameManager.Instance.lives++;
                     break;
 
                 case PickupType.Powerup:

@@ -10,35 +10,35 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f;
     public float jumpForce = 10f;
     public bool isGrounded = false;  
-    public int maxLives = 10;
-    private int _lives = 5;
+   // public int maxLives = 10;
+    //private int _lives = 5;
     #endregion
     #region Set/Get Lives
-    public int lives
-    {
-        get => _lives;
-        set
-            {
-            if (value < 0)
-            GameOver();
-            if (value > maxLives)
-            {
-                _lives = maxLives;
+    //public int lives
+    //{
+    //    get => _lives;
+    //    set
+    //        {
+    //        if (value < 0)
+    //        GameOver();
+    //        if (value > maxLives)
+    //        {
+    //            _lives = maxLives;
               
-            }
-            else
-            {
-                _lives = value;
-            }
+    //        }
+    //        else
+    //        {
+    //            _lives = value;
+    //        }
 
-            Debug.Log($"Life value has changed to {_lives}");
-        }
-    }
+    //        Debug.Log($"Life value has changed to {_lives}");
+    //    }
+    //}
     #endregion
-    private void GameOver()
-    {
-        Debug.Log("Game Over!");
-    }
+    //private void GameOver()
+    //{
+    //    Debug.Log("Game Over!");
+    //}
   
     //private Vector2 groundCheckPos => new Vector2(col.bounds.center.x, col.bounds.min.y);
     public bool isFire = false;
@@ -164,15 +164,20 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-        if (collision.gameObject.CompareTag("Range"))
-        {
-            Debug.Log("Within Range");
-            collision.GetComponent<TurretEnemy>().anim.SetTrigger("Fire");
-            collision.GetComponent<TurretEnemy>().sr.flipX = !sr.flipX;
-        }
+        //if (collision.gameObject.CompareTag("Range"))
+        //{
+          //  Debug.Log("Within Range");
+            //collision.GetComponent<TurretEnemy>().anim.SetTrigger("Fire");
+            //collision.GetComponent<TurretEnemy>().sr.flipX = !sr.flipX;
+        //}
         //Destroy(collision.gameObject);
     }
+    public void TakeDamage(int livesLost)
+    {
+        GameManager.Instance.lives -= livesLost;
+    }
 
+    public void IncreaseGravity() => rb.gravityScale = 5f;
     public void ApplyJumpForcePowerup()
     {
         if (jumpForceCoroutine  != null)
