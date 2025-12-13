@@ -21,6 +21,7 @@ public class CanvasManager : MonoBehaviour
     public GameObject mainMenu;
     public GameObject settingsMenu;
     public GameObject pauseMenu;
+    public GameObject gameOver;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,9 +29,10 @@ public class CanvasManager : MonoBehaviour
         if (startButton)
             startButton.onClick.AddListener(() =>
             {
-                //GameManager._lives = 5;
-            SceneManager.LoadScene(1);
-    });
+                GameManager.Instance.lives = 5;
+                SceneManager.LoadScene(1);
+                });
+
         if (settingsButton)
             settingsButton.onClick.AddListener(() => SetMenus(settingsMenu, mainMenu));
 
@@ -77,6 +79,22 @@ public class CanvasManager : MonoBehaviour
 #endif
     }
 
+    void OnEnable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnGameOver += showGameOver;
+    }
+
+    void OnDisable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnGameOver -= showGameOver;
+    }
+    public void showGameOver()
+    {
+        SetMenus(gameOver, null);
+        Time.timeScale = 0f;
+    }
     // Update is called once per frame
     void Update()
     {

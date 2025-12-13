@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     //public UnityEvent<int> OnLifeValueChanged;
 
     public event System.Action<int> OnLifeValueChanged;
+    public event System.Action OnGameOver;
 
     #region Singleton Pattern
     private static GameManager _instance;
@@ -29,11 +30,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    [Header("Menu References")]
-    public GameObject gameOver;
+    public CanvasManager canvasManager;
 
     #region Lives Management
-    private int _lives = 5;
+    public int _lives = 5;
     public int maxLives = 10;
     public int lives
     {
@@ -64,17 +64,10 @@ public class GameManager : MonoBehaviour
                 //some event to notify listeners that lives have changed?
             }
     }
-
-    private void SetMenus(GameObject menuToEnable, GameObject menuToDisable)
-    {
-        if (menuToEnable) menuToEnable.SetActive(true);
-        if (menuToDisable) menuToDisable.SetActive(false);
-    }
     private void GameOver()
     {
         Debug.Log("GameOver!");
-        SetMenus(gameOver, null);
-        Time.timeScale = 0f;
+        OnGameOver?.Invoke();
     }
     //private void Respawn()
     //{
