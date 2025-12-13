@@ -649,7 +649,7 @@ MonoBehaviour:
   backSettingsButton: {fileID: 0}
   resumeButton: {fileID: 249756634}
   returnToMenuButton: {fileID: 677433802}
-  livesText: {fileID: 0}
+  livesText: {fileID: 1189696183}
   mainMenu: {fileID: 0}
   settingsMenu: {fileID: 0}
   pauseMenu: {fileID: 1266808815}
@@ -5506,6 +5506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87fcc8ad809c4e4498011b3e90887944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  gameOver: {fileID: 660371973}
   maxLives: 10
   playerPrefab: {fileID: 0}
 --- !u!4 &1978812775

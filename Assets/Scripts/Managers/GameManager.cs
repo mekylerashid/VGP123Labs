@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    [Header("Menu References")]
+    public GameObject gameOver;
+
     #region Lives Management
     private int _lives = 5;
     public int maxLives = 10;
@@ -61,10 +64,17 @@ public class GameManager : MonoBehaviour
                 //some event to notify listeners that lives have changed?
             }
     }
+
+    private void SetMenus(GameObject menuToEnable, GameObject menuToDisable)
+    {
+        if (menuToEnable) menuToEnable.SetActive(true);
+        if (menuToDisable) menuToDisable.SetActive(false);
+    }
     private void GameOver()
     {
         Debug.Log("GameOver!");
-
+        SetMenus(gameOver, null);
+        Time.timeScale = 0f;
     }
     //private void Respawn()
     //{
@@ -87,6 +97,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Time.timeScale = 1f;
             string currentSceneName = SceneManager.GetActiveScene().name;
             string sceneToLoad = (currentSceneName == "Game") ? "Title" : "Game";
 

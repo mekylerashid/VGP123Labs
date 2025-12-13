@@ -26,8 +26,11 @@ public class CanvasManager : MonoBehaviour
     void Start()
     {
         if (startButton)
-            startButton.onClick.AddListener(() => SceneManager.LoadScene(1));
-
+            startButton.onClick.AddListener(() =>
+            {
+                //GameManager._lives = 5;
+            SceneManager.LoadScene(1);
+    });
         if (settingsButton)
             settingsButton.onClick.AddListener(() => SetMenus(settingsMenu, mainMenu));
 
