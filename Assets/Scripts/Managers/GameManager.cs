@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+//using UnityEngine.Events;
 
 [DefaultExecutionOrder(-100)] //Ensures that this script runs before others
 public class GameManager : MonoBehaviour
@@ -7,6 +8,10 @@ public class GameManager : MonoBehaviour
     //Signature that defines the delegate type - delegates are like function pointers
     public delegate void PlayerInstanceDelegate(PlayerController playerInstance);
     public event PlayerInstanceDelegate OnPlayerSpawned;
+
+    //public UnityEvent<int> OnLifeValueChanged;
+
+    public event System.Action<int> OnLifeValueChanged;
 
     #region Singleton Pattern
     private static GameManager _instance;
@@ -29,37 +34,42 @@ public class GameManager : MonoBehaviour
     public int maxLives = 10;
     public int lives
     {
-        get => _lives;
-        set
-        {
-            if (value < 0)
+            get => _lives;
+            set
             {
-                GameOver();
-                return;
-            }
+                if (value < 0)
+                {
+                    GameOver();
+                }
+                else if (value < _lives)
+                {
+                    //Respawn();
+                    _lives = value;
+                }
+                else if (value > maxLives)
+                {
+                    _lives = maxLives;
+                }
+                else
+                {
+                    _lives = value;
+                }
 
-            if (lives > value)
-            {
-                Respawn();
-                _lives = value;
-            }
+                Debug.Log($"Life value has changed to {_lives}");
 
-            if (value > maxLives)
-            {
-                _lives = maxLives;
+                OnLifeValueChanged?.Invoke(_lives);
+                //some event to notify listeners that lives have changed?
             }
-
-            Debug.Log($"Life value has changed to {_lives}");
-        }
     }
     private void GameOver()
     {
         Debug.Log("GameOver!");
+
     }
-    private void Respawn()
-    {
-        playerInstance.transform.position = currentCheckpoint;
-    }
+    //private void Respawn()
+    //{
+      //  playerInstance.transform.position = currentCheckpoint;
+    //}
     #endregion
 
     #region Player Controller Information

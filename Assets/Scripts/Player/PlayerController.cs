@@ -147,12 +147,21 @@ public class PlayerController : MonoBehaviour
          }
         */
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            TakeDamage(1);
+        }
+    }
+
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 3) return;
 
         Debug.Log("Collided with: " + collision.gameObject.name);
-    }
+    }*/
 
     //These functions are called when a trigger collider is entered, stayed in, or exited - they don't really have any limits on what they can interact with
     private void OnTriggerEnter2D(Collider2D collision)
