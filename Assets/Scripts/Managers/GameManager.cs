@@ -82,8 +82,23 @@ public class GameManager : MonoBehaviour
     private Vector3 currentCheckpoint;
     #endregion
 
+    /*public AudioSource source;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    private void Start()
+    {
+        SceneManager.activeSceneChanged += HandleSceneChanged;
+    }
+
+    void HandleSceneChanged(Scene oldScene, Scene newScene)
+    {
+        if (newScene.name == "Game")
+        {
+            //source.clip = //some other audio clip
+            source.Play();
+        }
+    }*/
 
     // Update is called once per frame
     void Update()

@@ -3,15 +3,20 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     private SpriteRenderer sr;
+    private AudioSource source;
 
     [SerializeField] private Vector2 initialShotVelocity = Vector2.zero;
     [SerializeField] private Transform spawnPointRight;
     [SerializeField] private Transform spawnPointLeft;
     [SerializeField] private Projectile projectilePrefab;
+
+    public AudioClip fireballSFX;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+        source = GetComponent<AudioSource>();
 
         if (initialShotVelocity == Vector2.zero)
         {
@@ -38,5 +43,7 @@ public class Shoot : MonoBehaviour
             curProjectile.SetVelocity(new Vector2(-initialShotVelocity.x, initialShotVelocity.y));
             
         }
+
+        source.PlayOneShot(fireballSFX);
     }
 }

@@ -4,6 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    public AudioSource source;
+    public AudioClip jumpSFX;
+    public AudioClip stompSFX;
+
+
     #region Control Vars
     //control variables
     public float groundCheckRadius = 0.02f;
@@ -70,6 +75,8 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
 
+        source = GetComponent<AudioSource>();
+
         //groundLayer = LayerMask.GetMask("Ground");
 
         groundCheck = new GroundCheck(col, LayerMask.GetMask("Ground"), groundCheckRadius);
@@ -98,6 +105,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            source.PlayOneShot(jumpSFX);
         }
 
         if (Input.GetButtonDown("Fire1"))
@@ -173,6 +181,7 @@ public class PlayerController : MonoBehaviour
             collision.GetComponentInParent<BaseEnemy>().TakeDamage(0, DamageType.JumpedOn);
             rb.linearVelocity = Vector2.zero;
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            source.PlayOneShot(stompSFX);
         }
 
         //if (collision.gameObject.CompareTag("Range"))

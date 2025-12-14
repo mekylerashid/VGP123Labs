@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
+    public AudioSource source;
+    public AudioClip gameOverSFX;
+    public AudioClip pauseSFX;
+    public AudioClip quitSFX;
 
     [Header("Button References")]
     public Button startButton;
@@ -26,6 +30,8 @@ public class CanvasManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        source = GetComponent<AudioSource>();
+
         if (startButton)
             startButton.onClick.AddListener(() =>
             {
@@ -75,6 +81,7 @@ public class CanvasManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
+source.PlayOneShot(quitSFX);
             Application.Quit();
 #endif
     }
@@ -92,6 +99,7 @@ public class CanvasManager : MonoBehaviour
     }
     public void showGameOver()
     {
+        source.PlayOneShot(gameOverSFX);
         SetMenus(gameOver, null);
         Time.timeScale = 0f;
     }
@@ -108,7 +116,7 @@ public class CanvasManager : MonoBehaviour
                 Time.timeScale = 1f;
                 return;
             }
-
+            source.PlayOneShot(pauseSFX);
             SetMenus(pauseMenu, null);
             Time.timeScale = 0f;
         }
